@@ -1,6 +1,12 @@
 #include "Circle.h"
 
 
+Circle::Circle(int x, int y, int w, int h, int r, int p)
+	: Geometry(x, y, w, h, r, p) {
+
+}
+
+
 void Draw(SDL_Renderer* renderer, Circle& circle)
 {
 	float dist = 2.0f * M_PI / circle.precision;

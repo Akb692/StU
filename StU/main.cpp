@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <iostream>
-
-
+#include "Circle.h"
+#include "Rectangle.h"
 void DrawHorizontalLine(SDL_Renderer* renderer, int x, int y, int length)
 {
 	SDL_RenderDrawPoint(renderer, x, y);
@@ -93,7 +93,7 @@ int main(int argc, char* argv[1])
 	//dessiner un pixel
 
 
-	DrawCircle(renderer, 200, 200, 100, 90);
+	Circle c (200)
 
 
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-
+#include <vector>
 
 
 class Geometry
@@ -11,7 +11,11 @@ public:
 	int posY;
 	int width;
 	int height;
-	Geometry() : posX(500), posY(500), width(200), height(200) {}
+	Geometry(int x, int y, int w, int h);
+
+	void SetPosition(int x, int y, float anchorX, float anchorY);
+	
+	Vector2 GetPosition(float anchorX, float anchorY);
 
 	virtual void Draw(SDL_Renderer* renderer);
 };
