@@ -32,26 +32,20 @@ void DrawRectangle(SDL_Renderer* renderer, int x, int y, int width, int height)
 }
 
 
-void DrawCircle(SDL_Renderer* renderer, int centerX, int centerY, int radius, int precision)
+void DrawCircle(SDL_Renderer* renderer, int x, int y, int radius, int precision)
 {
-	//centre 200 200
-	//rayon de -100 a 100
+	float dist = 2.0f * M_PI / precision;
+	int lastX = radius * cos(0) + x;
+	int lastY = radius * sin(0) + y;
 
-	float step = (2 * M_PI) / precision;
-
-	for (int i = 0; i < precision; i++)
+	for (int i = 1; i <= precision; i++)
 	{
-		int x1 = cos(step * i) + centerX;
-		int y1 = sin(step * i) + centerY;
-
-		int x2 = cos(step * (i + 1) + centerX);
-		int y2 = sin(step * (i + 1) + centerY);
-
-		SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
-
+		int newX = radius * cos(dist * i) + x;
+		int newY = radius * sin(dist * i) + y;
+		SDL_RenderDrawLine(renderer, lastX, lastY, newX, newY);
+		lastX = newX;
+		lastY = newY;
 	}
-
-
 
 }
 
@@ -99,7 +93,7 @@ int main(int argc, char* argv[1])
 	//dessiner un pixel
 
 
-	DrawCircle(renderer, 200, 200, 100, 5);
+	DrawCircle(renderer, 200, 200, 100, 90);
 
 
 
