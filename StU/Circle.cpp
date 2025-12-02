@@ -2,7 +2,7 @@
 
 
 Circle::Circle(int x, int y, int w, int h, int r, int p)
-	: Geometry(x, y, w, h, r, p) {
+	: Geometry(x, y, w, h) {
 
 }
 

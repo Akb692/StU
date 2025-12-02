@@ -93,7 +93,8 @@ int main(int argc, char* argv[1])
 	//dessiner un pixel
 
 
-	Circle c (200)
+	Circle c(200, 200, 100, 100, 200, 90);
+	c.Draw(renderer);
 
 
 
