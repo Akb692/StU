@@ -17,6 +17,6 @@ public:
 	
 	Vector2 GetPosition(float anchorX, float anchorY);
 
-	virtual void Draw(SDL_Renderer* renderer);
+	virtual void Draw(SDL_Renderer* renderer) = 0;
 };
 

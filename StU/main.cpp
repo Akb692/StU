@@ -100,7 +100,7 @@ int main(int argc, char* argv[1])
 	//dessiner un pixel
 
 	
-
+	/*
 	
 
 	Rectangle r1(200, 200, 100, 100);
@@ -141,10 +141,11 @@ int main(int argc, char* argv[1])
 	
 	Circle c4(PosBasDroite.x, PosBasDroite.y, 10, 10, 20, 600);
 	c4.Draw(renderer);
+	*/
 
 
-
-
+	Image mechantloup(0, 0, 888, 1070, renderer, "C/Users/isahouli/Downloads/mechant loup.bmp");
+	mechantloup.Draw(renderer);
 
 	SDL_Delay(900);
 	SDL_RenderPresent(renderer);
