@@ -25,8 +25,10 @@ void Geometry::SetPosition(int x, int y, float anchorX, float anchorY)
 
 	float offsetX = (float)width * anchorX;
 	float offsetY = (float)height * anchorY;
-	int newposX = x -offsetX;
+
+	int newposX = x - offsetX;
 	int newposY = y - offsetY;
+
 	this->posX = newposX;
 	this->posY = newposY;
 }

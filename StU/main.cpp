@@ -3,6 +3,9 @@
 #include "Circle.h"
 #include "Rectangle.h"
 #include "Math.h"
+#include "Image.h"
+
+
 
 void DrawHorizontalLine(SDL_Renderer* renderer, int x, int y, int length)
 {
@@ -138,6 +141,7 @@ int main(int argc, char* argv[1])
 	
 	Circle c4(PosBasDroite.x, PosBasDroite.y, 10, 10, 20, 600);
 	c4.Draw(renderer);
+
 
 
 
