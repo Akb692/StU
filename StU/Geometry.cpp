@@ -9,7 +9,7 @@ Geometry::Geometry(int x, int y, int w, int h)
 void Geometry::Draw(SDL_Renderer* renderer)
 {
 
-<<<<<<< HEAD
+
 }
 
 
@@ -44,6 +44,3 @@ Vector2 Geometry::GetPosition(float anchorX, float anchorY)
 
 	return vector;
 }
-=======
-}
->>>>>>> f93304038edf9d7410a5aa0a3f823bc6fe267601
