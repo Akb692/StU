@@ -9,15 +9,12 @@
 class Image : public Geometry
 {
 public:
-	Image(int x, int y, int w, int h, SDL_Renderer* renderer, std::string FilePath);
+	Image(int x, int y, int w, int h, SDL_Renderer* renderer, const char* FilePath);
 	
 	
 	
 	SDL_Renderer* renderer;
-	std::string FilePath;
-	
-	
-	SDL_Texture* texture;
+	const char* FilePath;
+	SDL_Texture* texture = NULL;
 	void Draw(SDL_Renderer* renderer) override;
 };
-
