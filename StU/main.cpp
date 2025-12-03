@@ -144,7 +144,7 @@ int main(int argc, char* argv[1])
 	*/
 
 
-	Image mechantloup(0, 0, 888, 1070, renderer, "C/Users/isahouli/Downloads/mechant loup.bmp");
+	Image mechantloup(0, 0, 888, 1070, renderer, "C:/Users/itaga/Downloads/mechant loup.bmp");
 	mechantloup.Draw(renderer);
 
 	SDL_Delay(900);

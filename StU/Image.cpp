@@ -17,15 +17,21 @@ void Image::Draw(SDL_Renderer* renderer)
 {
 	SDL_Surface* tmp = NULL;
 	texture = NULL;
-	tmp = SDL_LoadBMP(FilePath);
+
+
+	tmp = SDL_LoadBMP(FilePath); //1
 
 	if (tmp == NULL)
 	{
 		cout << "erreur" << endl;
 	}
+	
+
+	texture = SDL_CreateTextureFromSurface(renderer, tmp);
+	
 	SDL_RenderCopy(renderer, texture, NULL, NULL);
 	
-	SDL_CreateTextureFromSurface(renderer, tmp);
+	
 
 	
 }
