@@ -1,22 +1,22 @@
 #include "Circle.h"
-
+#include <cmath>
 
 Circle::Circle(int x, int y, int w, int h, int r, int p)
-	: Geometry(x, y, w, h) {
+	: Geometry(x, y, w, h), radius(r), precision(p) {
 
 }
 
 
-void Draw(SDL_Renderer* renderer, Circle& circle)
+void Circle::Draw(SDL_Renderer* renderer)
 {
-	float dist = 2.0f * M_PI / circle.precision;
-	int lastX = circle.radius * cos(0) + circle.posX;
-	int lastY = circle.radius * sin(0) + circle.posY;
+	float dist = 2.0f * M_PI / precision;
+	int lastX = radius * cos(0) + posX;
+	int lastY = radius * sin(0) + posY;
 
-	for (int i = 1; i <= circle.precision; i++)
+	for (int i = 1; i <= precision; i++)
 	{
-		int newX = circle.radius * cos(dist * i) + circle.posX;
-		int newY = circle.radius * sin(dist * i) + circle.posY;
+		int newX = radius * cos(dist * i) + posX;
+		int newY = radius * sin(dist * i) + posY;
 		SDL_RenderDrawLine(renderer, lastX, lastY, newX, newY);
 		lastX = newX;
 		lastY = newY;

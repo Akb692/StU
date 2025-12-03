@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <vector>
-
+#include "Math.h"
 
 class Geometry
 {
@@ -15,7 +15,7 @@ public:
 
 	void SetPosition(int x, int y, float anchorX, float anchorY);
 	
-	//Vector2 GetPosition(float anchorX, float anchorY);
+	Vector2 GetPosition(float anchorX, float anchorY);
 
 	virtual void Draw(SDL_Renderer* renderer);
 };
