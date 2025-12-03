@@ -67,6 +67,8 @@ void DrawLine(SDL_Renderer* renderer, float x1, float y1, float x2, float y2)
 	float y = y1;
 }
 
+
+
 int main(int argc, char* argv[1])
 {
 
