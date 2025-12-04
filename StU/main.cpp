@@ -4,7 +4,7 @@
 #include "Rectangle.h"
 #include "Math.h"
 #include "Image.h"
-
+using namespace std;
 
 
 void DrawHorizontalLine(SDL_Renderer* renderer, int x, int y, int length)
@@ -97,9 +97,7 @@ int main(int argc, char* argv[1])
 
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	//dessiner un pixel
-
-	
+	//TP 2
 	/*
 	
 
@@ -141,16 +139,93 @@ int main(int argc, char* argv[1])
 	
 	Circle c4(PosBasDroite.x, PosBasDroite.y, 10, 10, 20, 600);
 	c4.Draw(renderer);
-	*/
+	
 
 
-	Image mechantloup(0, 0, 888, 1070, renderer, "C:/Users/itaga/Downloads/mechant loup.bmp");
+	Image mechantloup(0, 0, 888, 1070, renderer, "C:/Users/isahouli/Downloads/loup mechant.bmp");
 	mechantloup.Draw(renderer);
 
-	SDL_Delay(900);
+	SDL_Delay(4000);
 	SDL_RenderPresent(renderer);
-	SDL_Delay(900);
+	SDL_Delay(4000);
 
+	*/
+
+	//TP 3
+		
+	bool running = true;
+	while (running == true)
+	{
+		SDL_Event event;
+
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_KEYDOWN:
+
+				if (event.key.keysym.sym == SDLK_ESCAPE) // sortir du programme
+				
+				{
+					cout << "escaped.." << endl;
+					running = false;
+				}
+
+				if (event.key.keysym.sym == SDLK_a) // etat a down
+
+				{
+					cout << " a down" << endl;
+					
+				}
+				
+				if (event.key.keysym.sym != SDLK_a)
+				{
+					cout << " key down" << endl;
+				}
+				break;
+
+			case SDL_KEYUP:
+
+				if (event.key.keysym.sym == SDLK_a) // etat a released
+
+				{
+					cout << " a released" << endl; 
+
+				}
+
+
+				if (event.key.keysym.sym != SDLK_a)
+				{
+					cout << " key up" << endl;
+				}
+				break;
+
+			case SDL_MOUSEBUTTONDOWN:
+
+				cout << "click pressed at x : " << event.button.x << ", y : " << event.button.y << endl; // detecte clic pressé 
+				break;
+
+			case SDL_MOUSEBUTTONUP:
+
+				cout << "click released at x : " << event.button.x << ", y : " << event.button.y << endl; // detecte clic relaché
+				break;
+			
+
+
+			case SDLK_a:
+				if (SDL_KEYDOWN && SDL_KEYUP)
+				{
+					cout << "a  held" << endl;
+				}
+				break;
+			}
+		}
+
+
+	}
+	
+	
+	
 
 	return 0;
 }
