@@ -97,6 +97,8 @@ int main(int argc, char* argv[1])
 
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	
+	
 	//TP 2
 	/*
 	
