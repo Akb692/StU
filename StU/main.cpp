@@ -147,21 +147,25 @@ int main(int argc, char* argv[1])
 	Image mechantloup(0, 0, 888, 1070, renderer, "C:/Users/isahouli/Downloads/loup mechant.bmp");
 	mechantloup.Draw(renderer);
 
-	SDL_Delay(4000);
+	SDL_Delay(40);
 	SDL_RenderPresent(renderer);
-	SDL_Delay(4000);
+	SDL_Delay(40);
 
 	*/
 
 	//TP 3
-		
+	bool held = false;
 	bool running = true;
 	while (running == true)
 	{
 		SDL_Event event;
-
 		while (SDL_PollEvent(&event))
+			
 		{
+			
+			int size;
+			SDL_GetKeyboardState(&size);
+
 			switch (event.type)
 			{
 			case SDL_KEYDOWN:
@@ -180,9 +184,16 @@ int main(int argc, char* argv[1])
 					
 				}
 				
+				if (held == true)
+				{
+					cout << " a held" << endl;
+				}
+
+
 				if (event.key.keysym.sym != SDLK_a)
 				{
-					cout << " key down" << endl;
+					cout << SDL_GetKeyName(event.key.keysym.sym) <<" down" << endl;
+					held = true;
 				}
 				break;
 
@@ -192,13 +203,13 @@ int main(int argc, char* argv[1])
 
 				{
 					cout << " a released" << endl; 
-
+					held = false;
 				}
 
 
 				if (event.key.keysym.sym != SDLK_a)
 				{
-					cout << " key up" << endl;
+					cout << SDL_GetKeyName(event.key.keysym.sym)<< "  up" << endl;
 				}
 				break;
 
@@ -211,21 +222,9 @@ int main(int argc, char* argv[1])
 
 				cout << "click released at x : " << event.button.x << ", y : " << event.button.y << endl; // detecte clic relaché
 				break;
-			
-
-
-			case SDLK_a:
-				if (SDL_KEYDOWN && SDL_KEYUP)
-				{
-					cout << "a  held" << endl;
-				}
-				break;
 			}
 		}
-
-
 	}
-	
 	
 	
 
