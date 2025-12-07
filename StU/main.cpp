@@ -100,8 +100,8 @@ int main(int argc, char* argv[1])
 	
 	
 	//TP 2
-	/*
 	
+	/*
 
 	Rectangle r1(200, 200, 100, 100);
 	r1.SetPosition(0, 0, 0, 0);
@@ -132,7 +132,7 @@ int main(int argc, char* argv[1])
 
 	Circle c1(PosHautGauche.x, PosHautGauche.y, 10, 10, 20, 600);
 	c1.Draw(renderer);
-
+	/*
 	Circle c2(PosHautDroite.x, PosHautDroite.y, 10, 10, 20, 600);
 	c2.Draw(renderer);
 
@@ -142,8 +142,23 @@ int main(int argc, char* argv[1])
 	Circle c4(PosBasDroite.x, PosBasDroite.y, 10, 10, 20, 600);
 	c4.Draw(renderer);
 	
+	*/
 
 
+
+	Circle c1(0, 0, 100, 100, 200, 600);
+	c1.SetPosition(540, 470, 0.5, 0.5);
+	c1.Draw(renderer);
+
+
+
+
+	SDL_Delay(400);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(400);
+
+
+	/*
 	Image mechantloup(0, 0, 888, 1070, renderer, "C:/Users/isahouli/Downloads/loup mechant.bmp");
 	mechantloup.Draw(renderer);
 
@@ -151,7 +166,7 @@ int main(int argc, char* argv[1])
 	SDL_RenderPresent(renderer);
 	SDL_Delay(40);
 
-	*/
+	
 
 	//TP 3
 	bool held = false;
@@ -222,10 +237,25 @@ int main(int argc, char* argv[1])
 
 				cout << "click released at x : " << event.button.x << ", y : " << event.button.y << endl; // detecte clic relaché
 				break;
+
+
+
+
+
+
+
+
+
+
+
+
+
 			}
 		}
+		
 	}
-	
+	*/
+
 	
 
 	return 0;
