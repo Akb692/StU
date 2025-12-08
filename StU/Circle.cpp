@@ -1,6 +1,6 @@
 #include "Circle.h"
 #include <cmath>
-
+#include <SDL.h>
 Circle::Circle(int x, int y, int w, int h, int r, int p)
 	: Geometry(x, y, w, h), radius(r), precision(p) {
 
@@ -21,4 +21,9 @@ void Circle::Draw(SDL_Renderer* renderer)
 		lastX = newX;
 		lastY = newY;
 	}
+}
+
+void Circle::Right(Circle c)
+{
+
 }

@@ -20,6 +20,9 @@ class InputManager
 	//const Uint8* m_keyboardState;
 	//Uint8 m_previousKeyboardState[SDL_NUM_SCANCODES] = { 0 };
 
+
+private:
+	
 public:
 	static InputManager* Get()
 	{

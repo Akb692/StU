@@ -12,5 +12,6 @@ public:
 	int precision;
 	int radius;
 	void Draw(SDL_Renderer* renderer) override;
+	void Right(Circle c);
 };
 

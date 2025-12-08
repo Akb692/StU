@@ -4,6 +4,8 @@
 #include "Rectangle.h"
 #include "Math.h"
 #include "Image.h"
+#include "InputManager.h"
+#include <cmath>
 using namespace std;
 
 
@@ -146,18 +148,6 @@ int main(int argc, char* argv[1])
 
 
 
-	Circle c1(0, 0, 100, 100, 200, 600);
-	c1.SetPosition(540, 470, 0.5, 0.5);
-	c1.Draw(renderer);
-
-
-
-
-	SDL_Delay(400);
-	SDL_RenderPresent(renderer);
-	SDL_Delay(400);
-
-
 	/*
 	Image mechantloup(0, 0, 888, 1070, renderer, "C:/Users/isahouli/Downloads/loup mechant.bmp");
 	mechantloup.Draw(renderer);
@@ -166,13 +156,17 @@ int main(int argc, char* argv[1])
 	SDL_RenderPresent(renderer);
 	SDL_Delay(40);
 
-	
-
+	*/
+	/*
 	//TP 3
 	bool held = false;
 	bool running = true;
+	Circle c1(0, 0, 100, 100, 200, 600);
+	c1.SetPosition(540, 470, 0.5, 0.5);
+	c1.Draw(renderer);
 	while (running == true)
 	{
+
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
 			
@@ -196,7 +190,7 @@ int main(int argc, char* argv[1])
 
 				{
 					cout << " a down" << endl;
-					
+					c1.posX += 100;
 				}
 				
 				if (held == true)
@@ -239,6 +233,9 @@ int main(int argc, char* argv[1])
 				break;
 
 
+				SDL_Delay(400);
+				SDL_RenderPresent(renderer);
+				SDL_Delay(400);
 
 
 
@@ -254,9 +251,70 @@ int main(int argc, char* argv[1])
 		}
 		
 	}
-	*/
-
 	
+
+// TP4
+
+Circle c1(0, 0, 100, 100, 200, 600);
+c1.SetPosition(540, 470, 0.5, 0.5);
+c1.Draw(renderer);
+
+SDL_Event event;
+while (true)
+{
+	while (SDL_PollEvent(&event))
+	{
+
+		
+
+		if (event.key.keysym.sym == SDLK_d )
+		{
+			c1.posX += 100;
+		}
+
+
+		SDL_Delay(400);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(400);
+	}
+
+
+}
+
+*/
+
+
+Circle c1(500, 500, 100, 100, 50, 600);
+Circle c2(200, 500, 100, 100, 50, 600);
+
+while (true)
+{
+	// EVENT
+	InputManager::Get()->Update();
+
+
+	//UPDATE
+	if (InputManager::Get()->IsHeld(SDLK_z))
+	{
+		c1.Move(0.f, -0.05f);
+	}
+
+	if (InputManager::Get()->IsHeld(SDLK_q))
+	{
+		c1.posX -= 100;
+	}
+
+	// DRAW
+	SDL_SetRenderDrawColor(renderer, 100, 200, 200, 255);
+	SDL_RenderClear(renderer);
+	c1.Draw(renderer);
+
+
+	SDL_Delay(400);
+	SDL_RenderPresent(renderer);
+
+
+}
 
 	return 0;
 }

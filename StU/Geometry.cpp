@@ -4,6 +4,8 @@ using namespace std;
 Geometry::Geometry(int x, int y, int w, int h)
 	: posX(x), posY(y), width(w), height(h) {
 
+	Color color = { 255,255,255, 0 };
+
 }
 
 void Geometry::Draw(SDL_Renderer* renderer)
@@ -45,4 +47,10 @@ Vector2 Geometry::GetPosition(float anchorX, float anchorY)
 	Vector2 vector{ newposX, newposY };
 
 	return vector;
+}
+
+
+void Geometry::Move(float x, float y)
+{
+	posX += x, posY += y;
 }
