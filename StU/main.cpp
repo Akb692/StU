@@ -455,6 +455,9 @@ int main(int argc, char** argv)
 		Vector2f pos = r1.GetPosition(1, 0.5);
 		Uint64 start = SDL_GetTicks64();
 		SDL_Event* event;
+		
+		
+		
 		//EVENT
 		InputManager::Get()->Update();
 
