@@ -5,7 +5,7 @@
 class Projectile : public Rectangle
 {
 public:
-	Projectile();
+	Projectile(int width, int height);
 
-
+	
 };

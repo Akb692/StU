@@ -2,7 +2,6 @@
 
 
 
-Projectile::Projectile() : Rectangle()
+Projectile::Projectile(int width, int height) : Rectangle(width,height)
 {
-
 }

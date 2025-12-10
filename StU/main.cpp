@@ -433,9 +433,14 @@ int main(int argc, char** argv)
 	//init
 	Rectangle r1(150, 40);
 	r1.SetPosition(WIDTH / 8, HEIGHT / 2);
+	
+
+	
 
 
-	Projectile p;
+
+	Projectile p(150,150);
+
 
 	Circle c2(100);
 	c2.SetPosition(200, HEIGHT / 2);
@@ -447,6 +452,7 @@ int main(int argc, char** argv)
 
 	while (true)
 	{
+		Vector2f pos = r1.GetPosition(1, 0.5);
 		Uint64 start = SDL_GetTicks64();
 		SDL_Event* event;
 		//EVENT
@@ -454,12 +460,13 @@ int main(int argc, char** argv)
 
 		//UPDATE
 		
-
+	
 		if (InputManager::Get()->IsHeld(SDLK_z))
 		{
 			//move up
 			r1.Move(0.f, -speedc1 * deltaTime);
-
+			p.SetPosition(pos.x, pos.y);
+			p.Draw(renderer);
 		}
 		if (InputManager::Get()->IsHeld(SDLK_q))
 		{
