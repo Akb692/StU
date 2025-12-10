@@ -1,7 +1,8 @@
 #pragma once
-#include <SDL.h>
-#include <vector>
+
 #include "Math.h"
+
+struct SDL_Renderer;
 
 struct Color
 {
@@ -9,28 +10,35 @@ struct Color
 	int g;
 	int b;
 	int a;
-
 };
+
 class Geometry
 {
+protected:
+	float m_x;
+	float m_y;
+	int m_width;
+	int m_height;
+
+
+
+
 public:
-	
-	int posX;
-	int posY;
-	int width;
-	int height;
-	Color color;
+	Color m_color;
 
-	Geometry(int x, int y, int w, int h);
+	Geometry(int width, int height);
 
-	void SetPosition(int x, int y, float anchorX, float anchorY);
-	
-	Vector2 GetPosition(float anchorX, float anchorY);
+	Vector2f GetPosition(float anchorX = 0.5f, float anchorY = 0.5f) const;
+
+	void SetPosition(const Vector2f& position, float anchorX = 0.5f, float anchorY = 0.5f);
+	void SetPosition(float x, float y, float anchorX = 0.5f, float anchorY = 0.5f);
+	void Move(float x, float y);
+
+	void SetColor(const Color& color) { m_color = color; }
+
+	virtual void Resize(int width, int height);
 
 	virtual void Draw(SDL_Renderer* renderer) = 0;
 
-	void Move(float x, float y);
 };
-
-
 

@@ -1,17 +1,14 @@
 #include "Rectangle.h"
-#include <iostream>
-using namespace std;
 
+#include <SDL.h>
 
-Rectangle::Rectangle(int x, int y, int w, int h)
-	: Geometry(x, y, w, h) {
+Rectangle::Rectangle(int width, int height) : Geometry(width, height)
+{
 }
-
 
 void Rectangle::Draw(SDL_Renderer* renderer)
 {
-	SDL_RenderDrawLine(renderer, posX, posY, posX + width, posY);
-	SDL_RenderDrawLine(renderer, posX + width, posY, posX + width, posY + height);
-	SDL_RenderDrawLine(renderer, posX + width, posY + height, posX, posY + height);
-	SDL_RenderDrawLine(renderer, posX, posY + height, posX, posY);
+	SDL_Rect rect = { m_x, m_y, m_width, m_height };
+
+	SDL_RenderDrawRect(renderer, &rect);
 }

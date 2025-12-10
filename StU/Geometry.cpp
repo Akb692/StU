@@ -1,56 +1,44 @@
 #include "Geometry.h"
-#include <iostream>
-using namespace std;
-Geometry::Geometry(int x, int y, int w, int h)
-	: posX(x), posY(y), width(w), height(h) {
 
-	Color color = { 255,255,255, 0 };
-
-}
-
-void Geometry::Draw(SDL_Renderer* renderer)
+Geometry::Geometry(int width, int height)
 {
+	m_x = 0;
+	m_y = 0;
+	m_width = width;
+	m_height = height;
 
-
+	m_color = { 255,255,255,255 };
 }
 
-
-
-void Geometry::SetPosition(int x, int y, float anchorX, float anchorY)
+Vector2f Geometry::GetPosition(float anchorX, float anchorY) const
 {
+	Vector2f pos;
 
-	if(anchorX > 1 || anchorX < 0 || anchorY > 1 || anchorY < 0 )
-	{
-		cout << "anchor point error";
-		return;
-	}
+	pos.x = m_x + m_width * anchorX;
+	pos.y = m_y + m_height * anchorY;
 
-	float offsetX = (float)width * anchorX;
-	float offsetY = (float)height * anchorY;
-
-	int newposX = x - offsetX;
-	int newposY = y - offsetY;
-
-	this->posX = newposX;
-	this->posY = newposY;
+	return pos;
 }
 
-Vector2 Geometry::GetPosition(float anchorX, float anchorY)
+void Geometry::SetPosition(const Vector2f& position, float anchorX, float anchorY)
 {
-
-	float offsetX = (float)width * anchorX;
-	float offsetY = (float)height * anchorY;
-
-	float newposX = posX + offsetX;
-	float newposY = posY + offsetY;
-
-	Vector2 vector{ newposX, newposY };
-
-	return vector;
+	SetPosition(position.x, position.y, anchorX, anchorY);
 }
 
+void Geometry::Resize(int width, int height)
+{
+	m_width = width;
+	m_height = height;
+}
+
+void Geometry::SetPosition(float x, float y, float anchorX, float anchorY)
+{
+	m_x = x - m_width * anchorX;
+	m_y = y - m_height * anchorY;
+}
 
 void Geometry::Move(float x, float y)
 {
-	posX += x, posY += y;
+	m_x += x;
+	m_y += y;
 }

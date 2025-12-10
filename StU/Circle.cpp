@@ -1,29 +1,45 @@
 #include "Circle.h"
-#include <cmath>
+
 #include <SDL.h>
-Circle::Circle(int x, int y, int w, int h, int r, int p)
-	: Geometry(x, y, w, h), radius(r), precision(p) {
 
+Circle::Circle(int radius, int precision) : Geometry(radius * 2, radius * 2)
+{
+	m_precision = precision;
 }
-
 
 void Circle::Draw(SDL_Renderer* renderer)
 {
-	float dist = 2.0f * M_PI / precision;
-	int lastX = radius * cos(0) + posX;
-	int lastY = radius * sin(0) + posY;
+	SDL_SetRenderDrawColor(renderer, m_color.r, m_color.g, m_color.b, m_color.a);
 
-	for (int i = 1; i <= precision; i++)
+	float perimeter = 2 * M_PI;
+	float step = perimeter / m_precision;
+
+	float radius = GetRadius();
+
+	Vector2f center = GetPosition(0.5f, 0.5f);
+
+	int lastX = radius * cos(0) + center.x;
+	int lastY = radius * sin(0) + center.y;
+
+	for (int i = 1; i <= m_precision; i++)
 	{
-		int newX = radius * cos(dist * i) + posX;
-		int newY = radius * sin(dist * i) + posY;
-		SDL_RenderDrawLine(renderer, lastX, lastY, newX, newY);
-		lastX = newX;
-		lastY = newY;
+		int currentX = radius * cos(step * i) + center.x;
+		int currentY = radius * sin(step * i) + center.y;
+
+		SDL_RenderDrawLine(renderer, lastX, lastY, currentX, currentY);
+
+		lastX = currentX;
+		lastY = currentY;
 	}
 }
 
-void Circle::Right(Circle c)
+bool Circle::IsColliding(const Circle* target)
 {
+	Vector2f center1 = GetPosition(0.5f, 0.5f);
+	Vector2f center2 = target->GetPosition(0.5f, 0.5f);
 
+	float distance = Math::GetDistance(center1.x, center1.y, center2.x, center2.y);
+	float radiusDist = GetRadius() + target->GetRadius();
+
+	return distance <= radiusDist;
 }

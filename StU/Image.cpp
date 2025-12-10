@@ -1,39 +1,31 @@
 #include "Image.h"
+
+#include <SDL.h>
+
 #include <iostream>
-using namespace std;
+#include "AssetManager.h"
 
-Image::Image(int x, int y, int w, int h, SDL_Renderer* r, const char* FP)
-	: Geometry(x, y, w, h), renderer(r), FilePath(FP) {
+Image::Image(SDL_Renderer* renderer, const char* path) : Geometry(-1, -1)
+{
+	m_texture = AssetManager::Get()->LoadTexture(renderer, path);
 
+	SDL_QueryTexture(m_texture, NULL, NULL, &m_width, &m_height);
 }
 
+void Image::Resize(int width, int height)
+{
+	float factorWidth = width / m_width;
+	float factorHeight = height / m_height;
 
+	float factorMin = std::min(factorWidth, factorHeight);
 
-
-
-
+	m_width *= factorMin;
+	m_height *= factorMin;
+}
 
 void Image::Draw(SDL_Renderer* renderer)
 {
-	SDL_Surface* surface = NULL;
-	texture = NULL;
+	SDL_Rect dst = { m_x, m_y, m_width, m_height };
 
-
-	surface = SDL_LoadBMP(FilePath);
-
-	if (surface == NULL)
-	{
-		cout << "loading error" << endl;
-	}
-	
-
-	texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-	SDL_FreeSurface(surface);
-	
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	
-	
-
-	
+	SDL_RenderCopy(renderer, m_texture, NULL, &dst);
 }

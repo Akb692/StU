@@ -6,6 +6,7 @@
 #include "Image.h"
 #include "InputManager.h"
 #include <cmath>
+#include "Projectile.h"
 using namespace std;
 
 
@@ -74,7 +75,7 @@ void DrawLine(SDL_Renderer* renderer, float x1, float y1, float x2, float y2)
 	float y = y1;
 }
 
-
+/*
 
 int main(int argc, char* argv[1])
 {
@@ -281,7 +282,7 @@ while (true)
 
 }
 
-*/
+
 
 
 Circle c1(500, 500, 100, 100, 50, 600);
@@ -318,5 +319,233 @@ while (true)
 
 	return 0;
 }
+*/
 
 
+
+#define WIDTH 800
+#define HEIGHT 400
+
+#define CENTER_X (WIDTH - 1) / 2
+#define CENTER_Y (HEIGHT - 1) / 2
+
+#define TARGET_FPS 60
+#define TARGET_DELTA_TIME 1.f / TARGET_FPS
+
+SDL_Renderer* renderer;
+
+Color White = { 255, 255, 255, 255 };
+Color Grey = { 127, 127, 127, 255 };
+Color Black = { 0, 0, 0, 255 };
+Color Red = { 255, 0, 0, 255 };
+Color Orange = { 255, 127, 0, 255 };
+Color Yellow = { 255, 255, 0, 255 };
+Color Green = { 0, 255, 0, 255 };
+Color Cyan = { 0, 255, 255, 255 };
+Color Blue = { 0, 0, 255, 255 };
+Color Magenta = { 255, 0, 255, 255 };
+
+void ChooseColor(std::string s)
+{
+	if (s == "Red")
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	}
+
+	else if (s == "Orange")
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 127, 0, 255);
+	}
+
+	else if (s == "Yellow")
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+	}
+
+	else if (s == "Green")
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+	}
+
+	else if (s == "Cyan")
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
+	}
+
+	else if (s == "Blue")
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+	}
+
+	else if (s == "Magenta")
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+	}
+
+	else if (s == "Pink")
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 150, 150, 255);
+	}
+
+	else if (s == "White")
+	{
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	}
+
+	else if (s == "Grey")
+	{
+		SDL_SetRenderDrawColor(renderer, 127, 127, 127, 255);
+	}
+
+	else if (s == "Black")
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	}
+}
+
+int main(int argc, char** argv)
+{
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
+	{
+		std::cout << "Error SDL2 Initialization : " << SDL_GetError();
+		return 1;
+	}
+
+	SDL_Window* window;
+
+
+	window = SDL_CreateWindow("Draw", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
+	if (window == NULL)
+	{
+		std::cout << "Error window creation";
+		return false;
+	}
+
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	if (renderer == NULL)
+	{
+		std::cout << "Error renderer creation";
+		return false;
+	}
+
+	Vector2 projectiles;
+
+	//init
+	Rectangle r1(150, 40);
+	r1.SetPosition(WIDTH / 8, HEIGHT / 2);
+
+
+	Projectile p;
+
+	Circle c2(100);
+	c2.SetPosition(200, HEIGHT / 2);
+
+	int speedc1 = 300;
+	int speedc2 = 50;
+
+	float deltaTime = 0;
+
+	while (true)
+	{
+		Uint64 start = SDL_GetTicks64();
+		SDL_Event* event;
+		//EVENT
+		InputManager::Get()->Update();
+
+		//UPDATE
+		
+
+		if (InputManager::Get()->IsHeld(SDLK_z))
+		{
+			//move up
+			r1.Move(0.f, -speedc1 * deltaTime);
+
+		}
+		if (InputManager::Get()->IsHeld(SDLK_q))
+		{
+			//move left
+			r1.Move(-speedc1 * deltaTime, 0.f);
+
+		}
+		if (InputManager::Get()->IsHeld(SDLK_s))
+		{
+			//move down
+			r1.Move(0.f, speedc1 * deltaTime);
+		}
+		if (InputManager::Get()->IsHeld(SDLK_d))
+		{
+			//move right
+			r1.Move(speedc1 * deltaTime, 0.f);
+		}
+
+		c2.Move(0.f, -speedc2 * deltaTime);
+
+
+
+		/*
+		if (InputManager::Get()->IsHeld(SDL_MOUSEBUTTONDOWN))
+		{
+			//move right
+			r1.Move(speedc1 * deltaTime, 0.f);
+		}
+		*/
+
+
+
+
+
+		if (c2.GetPosition(0.f, 1.f).y < 0)
+			c2.SetPosition(200, HEIGHT + c2.GetRadius());
+
+		if (r1.GetPosition(0.5f, 0.f).y < 0)
+		{
+			r1.SetPosition(r1.GetPosition(0.5f, 0.5f).x, 0, 0.5, 0);
+		}
+
+		if (r1.GetPosition(0.5f, 1.f).y > HEIGHT)
+		{
+			r1.SetPosition(r1.GetPosition(0.5f, 0.5f).x, HEIGHT, 0.5, 1);
+		}
+
+		if (r1.GetPosition(0.f, 0.5f).x < 0)
+		{
+			r1.SetPosition(0, r1.GetPosition(0.5f, 0.5f).y, 0, 0.5);
+		}
+
+		if (r1.GetPosition(1.f, 0.5f).x > WIDTH / 4)
+		{
+			r1.SetPosition(WIDTH / 4, r1.GetPosition(0.5f, 0.5f).y, 1, 0.5);
+		}
+
+		//DRAW
+		ChooseColor("Black");
+		SDL_RenderClear(renderer);
+		c2.Draw(renderer);
+		r1.Draw(renderer);
+
+
+		SDL_RenderPresent(renderer);
+		Uint64 end = SDL_GetTicks64();
+
+		deltaTime = (end - start) / 1000.f;
+		float diff = TARGET_DELTA_TIME - deltaTime;
+
+		//Cap FPS
+		if (diff > 0)
+		{
+			SDL_Delay(diff * 1000);
+			deltaTime = TARGET_DELTA_TIME;
+		}
+
+		//Display FPS
+		std::cout << 1.f / deltaTime << std::endl;
+
+	}
+
+	SDL_Delay(1000);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+
+	return 0;
+}
