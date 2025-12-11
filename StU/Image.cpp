@@ -1,7 +1,5 @@
 #include "Image.h"
-
 #include <SDL.h>
-
 #include <iostream>
 #include "AssetManager.h"
 

@@ -437,10 +437,12 @@ int main(int argc, char** argv)
 
 	
 
+	// creation du projectile et getpos
 
-
-	Projectile p(150,150);
-
+	Projectile p (25,10);
+	p.m_color = {255, 255, 255, 255};
+	p.SetPosition(-1000, -1000);
+	
 
 	Circle c2(100);
 	c2.SetPosition(200, HEIGHT / 2);
@@ -455,7 +457,7 @@ int main(int argc, char** argv)
 		Vector2f pos = r1.GetPosition(1, 0.5);
 		Uint64 start = SDL_GetTicks64();
 		SDL_Event* event;
-		
+		Vector2f PosProj = p.GetPosition(1, 0.5f);
 		
 		
 		//EVENT
@@ -468,8 +470,6 @@ int main(int argc, char** argv)
 		{
 			//move up
 			r1.Move(0.f, -speedc1 * deltaTime);
-			p.SetPosition(pos.x, pos.y);
-			p.Draw(renderer);
 		}
 		if (InputManager::Get()->IsHeld(SDLK_q))
 		{
@@ -486,6 +486,10 @@ int main(int argc, char** argv)
 		{
 			//move right
 			r1.Move(speedc1 * deltaTime, 0.f);
+		}
+		if (InputManager::Get()->IsHeld(SDLK_SPACE))
+		{
+			p.SetPosition(pos.x, pos.y);
 		}
 
 		c2.Move(0.f, -speedc2 * deltaTime);
@@ -532,6 +536,15 @@ int main(int argc, char** argv)
 		SDL_RenderClear(renderer);
 		c2.Draw(renderer);
 		r1.Draw(renderer);
+		p.Draw(renderer);
+	    p.Move(speedc1 * deltaTime, 0.f);
+		cout << PosProj.x << endl;
+		if (PosProj.x >= WIDTH)
+		{
+			//~&p;
+			delete(&p);
+			cout << "projectile detruit" << endl;
+		}
 
 
 		SDL_RenderPresent(renderer);
@@ -548,7 +561,7 @@ int main(int argc, char** argv)
 		}
 
 		//Display FPS
-		std::cout << 1.f / deltaTime << std::endl;
+		//std::cout << 1.f / deltaTime << std::endl;
 
 	}
 

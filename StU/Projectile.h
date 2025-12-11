@@ -7,5 +7,5 @@ class Projectile : public Rectangle
 public:
 	Projectile(int width, int height);
 
-	
+	//~Projectile();
 };
