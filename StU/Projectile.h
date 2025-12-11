@@ -4,6 +4,12 @@
 
 class Projectile : public Rectangle
 {
+private:
+
+	int Damage;
+	float Speed;
+	Vector2f Direction;
+
 public:
 	Projectile(int width, int height);
 

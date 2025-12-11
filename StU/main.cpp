@@ -7,6 +7,7 @@
 #include "InputManager.h"
 #include <cmath>
 #include "Projectile.h"
+#include "GameManager.h"
 using namespace std;
 
 
@@ -442,7 +443,7 @@ int main(int argc, char** argv)
 	Projectile p (25,10);
 	p.m_color = {255, 255, 255, 255};
 	p.SetPosition(-1000, -1000);
-	
+	GameManager gm;
 
 	Circle c2(100);
 	c2.SetPosition(200, HEIGHT / 2);
@@ -487,9 +488,10 @@ int main(int argc, char** argv)
 			//move right
 			r1.Move(speedc1 * deltaTime, 0.f);
 		}
-		if (InputManager::Get()->IsHeld(SDLK_SPACE))
+		if (InputManager::Get()->IsDown(SDLK_SPACE))
 		{
 			p.SetPosition(pos.x, pos.y);
+			gm.Projectile.push_back(&p);
 		}
 
 		c2.Move(0.f, -speedc2 * deltaTime);
@@ -538,10 +540,14 @@ int main(int argc, char** argv)
 		r1.Draw(renderer);
 		p.Draw(renderer);
 	    p.Move(speedc1 * deltaTime, 0.f);
-		cout << PosProj.x << endl;
-		if (PosProj.x >= WIDTH)
+		//cout << PosProj.x << endl;
+		bool isdestroyed = false;
+
+ 		if (PosProj.x >= WIDTH)
 		{
 			//~&p;
+			
+			gm.Projectile.pop_back();
 			delete(&p);
 			cout << "projectile detruit" << endl;
 		}
@@ -560,6 +566,7 @@ int main(int argc, char** argv)
 			deltaTime = TARGET_DELTA_TIME;
 		}
 
+		cout << gm.Projectile.size() << endl;
 		//Display FPS
 		//std::cout << 1.f / deltaTime << std::endl;
 

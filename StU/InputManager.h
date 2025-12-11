@@ -3,7 +3,7 @@
 #include "SDL.h"
 #include <iostream>
 #include <map>
-
+#include "GameManager.h"
 
 class InputManager
 {
@@ -42,6 +42,7 @@ public:
 			m_states[i].isDown = false;
 			m_states[i].isUp = false;
 		}
+
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
@@ -103,3 +104,5 @@ public:
 		return m_states[scancode].isUp;
 	}
 };
+
+
