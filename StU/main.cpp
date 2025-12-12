@@ -429,20 +429,10 @@ int main(int argc, char** argv)
 		return false;
 	}
 
-	Vector2 projectiles;
-
 	//init
 	Rectangle r1(150, 40);
 	r1.SetPosition(WIDTH / 8, HEIGHT / 2);
-	
 
-	
-
-	// creation du projectile et getpos
-
-	Projectile p (25,10);
-	p.m_color = {255, 255, 255, 255};
-	p.SetPosition(-1000, -1000);
 	GameManager gm;
 
 	Circle c2(100);
@@ -458,15 +448,19 @@ int main(int argc, char** argv)
 		Vector2f pos = r1.GetPosition(1, 0.5);
 		Uint64 start = SDL_GetTicks64();
 		SDL_Event* event;
-		Vector2f PosProj = p.GetPosition(1, 0.5f);
-		
 		
 		//EVENT
 		InputManager::Get()->Update();
 
 		//UPDATE
+		Vector2f PosProj = { 0,0 };
+		for (auto* proj : gm.Projectile)
+		{
+			PosProj = proj->GetPosition(1, 0.5);
+
+		}
+
 		
-	
 		if (InputManager::Get()->IsHeld(SDLK_z))
 		{
 			//move up
@@ -488,13 +482,16 @@ int main(int argc, char** argv)
 			//move right
 			r1.Move(speedc1 * deltaTime, 0.f);
 		}
-		if (InputManager::Get()->IsDown(SDLK_SPACE))
+ 		if (InputManager::Get()->IsDown(SDLK_SPACE))
 		{
-			p.SetPosition(pos.x, pos.y);
-			gm.Projectile.push_back(&p);
+			Projectile* proj = new Projectile(25, 10);
+			proj->m_color = { 255, 255, 255, 255 };
+			proj->SetPosition(pos.x, pos.y);
+			gm.Projectile.push_back(proj);
+			proj->Move(speedc1 * deltaTime, 0.f);
 		}
-
-		c2.Move(0.f, -speedc2 * deltaTime);
+		
+		//c2.Move(0.f, -speedc2 * deltaTime);
 
 
 
@@ -508,10 +505,12 @@ int main(int argc, char** argv)
 
 
 
-
+		
 
 		if (c2.GetPosition(0.f, 1.f).y < 0)
+		{
 			c2.SetPosition(200, HEIGHT + c2.GetRadius());
+		}
 
 		if (r1.GetPosition(0.5f, 0.f).y < 0)
 		{
@@ -533,23 +532,35 @@ int main(int argc, char** argv)
 			r1.SetPosition(WIDTH / 4, r1.GetPosition(0.5f, 0.5f).y, 1, 0.5);
 		}
 
+		//UPDATE
+
+		for (auto* proj : gm.Projectile)
+		{
+			//if (proj.x >= WIDTH)
+			//{
+				//delete(proj);
+			//}
+		}
 		//DRAW
 		ChooseColor("Black");
 		SDL_RenderClear(renderer);
 		c2.Draw(renderer);
 		r1.Draw(renderer);
-		p.Draw(renderer);
-	    p.Move(speedc1 * deltaTime, 0.f);
+		//p.Draw(renderer);
+	    //p.Move(speedc1 * deltaTime, 0.f);
 		//cout << PosProj.x << endl;
-		bool isdestroyed = false;
+		for (auto* proj : gm.Projectile)
+		{
+			proj->Draw(renderer);
+			proj->Move(speedc1 * deltaTime, 0.f); 
+		}
 
- 		if (PosProj.x >= WIDTH)
+		if (PosProj.x >= WIDTH)
 		{
 			//~&p;
-			
-			gm.Projectile.pop_back();
-			delete(&p);
+			//delete(&p);
 			cout << "projectile detruit" << endl;
+			PosProj.x = 0;
 		}
 
 
@@ -570,7 +581,11 @@ int main(int argc, char** argv)
 		//Display FPS
 		//std::cout << 1.f / deltaTime << std::endl;
 
+
+		
+
 	}
+
 
 	SDL_Delay(1000);
 	SDL_DestroyRenderer(renderer);
