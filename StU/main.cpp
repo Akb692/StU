@@ -21,6 +21,10 @@ void DrawHorizontalLine(SDL_Renderer* renderer, int x, int y, int length)
 	}
 }
 
+
+
+
+
 void DrawVerticalLine(SDL_Renderer* renderer, int x, int y, int length)
 {
 	SDL_RenderDrawPoint(renderer, x, y);
@@ -484,7 +488,7 @@ int main(int argc, char** argv)
 			//move right
 			r1.Move(speedc1 * deltaTime, 0.f);
 		}
-		if (InputManager::Get()->IsDown(SDLK_SPACE))
+		if (InputManager::Get()->IsHeld(SDLK_SPACE))
 		{
 			Projectile* proj = new Projectile(25, 10);
 			proj->m_color = { 255, 255, 255, 255 };
@@ -542,8 +546,8 @@ int main(int argc, char** argv)
 			if (gm.Projectile[i]->GetPosition(0, 0.5).x > WIDTH)
 			{
 				
-				delete(gm.Projectile[i]);
-
+					delete(gm.Projectile[i]);
+					gm.Projectile.erase(gm.Projectile.begin() + i);
 
 			}
 			
@@ -589,8 +593,8 @@ int main(int argc, char** argv)
 		//std::cout << 1.f / deltaTime << std::endl;
 
 
-		
 
+		
 	}
 
 
