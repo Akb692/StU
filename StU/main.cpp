@@ -8,6 +8,7 @@
 #include <cmath>
 #include "Projectile.h"
 #include "GameManager.h"
+#include "AssetManager.h"
 using namespace std;
 
 
@@ -434,14 +435,26 @@ int main(int argc, char** argv)
 		return false;
 	}
 
+
+
+
+	//TEST
+
+
+
+	AssetManager as;
+
+	as.LoadTexture(renderer, "C:/Users/isahouli/Downloads/Warwick_Render.bmp");
+
+	
 	//init
 	Rectangle r1(150, 40);
 	r1.SetPosition(WIDTH / 8, HEIGHT / 2);
 
 	GameManager gm;
 
-	Circle c2(100);
-	c2.SetPosition(200, HEIGHT / 2);
+	Circle c2(30);
+	c2.SetPosition(600, 300);
 
 	int speedc1 = 300;
 	int speedc2 = 50;
@@ -488,14 +501,23 @@ int main(int argc, char** argv)
 			//move right
 			r1.Move(speedc1 * deltaTime, 0.f);
 		}
-		if (InputManager::Get()->IsHeld(SDLK_SPACE))
+		if (InputManager::Get()->IsDown(SDLK_SPACE))
 		{
+
+			// shoot normal projectile
+
 			Projectile* proj = new Projectile(25, 10);
 			proj->m_color = { 255, 255, 255, 255 };
 			proj->SetPosition(pos.x, pos.y);
 			gm.Projectile.push_back(proj);
 			proj->Move(speedc1 * deltaTime, 0.f);
 		}
+		if (InputManager::Get()->IsHeld(SDLK_d))
+		{
+			//shoot projectile tete cherch
+			r1.Move(speedc1 * deltaTime, 0.f);
+		}
+
 
 		//c2.Move(0.f, -speedc2 * deltaTime);
 
@@ -511,7 +533,7 @@ int main(int argc, char** argv)
 
 
 
-
+		/*
 
 		if (c2.GetPosition(0.f, 1.f).y < 0)
 		{
@@ -593,7 +615,7 @@ int main(int argc, char** argv)
 		//std::cout << 1.f / deltaTime << std::endl;
 
 
-
+		*/
 		
 	}
 
