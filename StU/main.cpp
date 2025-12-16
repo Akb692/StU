@@ -442,14 +442,24 @@ int main(int argc, char** argv)
 
 
 
-	AssetManager as;
-
-	as.LoadTexture(renderer, "C:/Users/isahouli/Downloads/Warwick_Render.bmp");
+	
 
 	
 	//init
-	Rectangle r1(150, 40);
-	r1.SetPosition(WIDTH / 8, HEIGHT / 2);
+	Rectangle r1(150, 150);
+	r1.SetPosition(WIDTH / 8, HEIGHT / 2,0,0);
+	const char* filepath = "C:/Users/isahouli/Downloads/ship.bmp";
+	SDL_Surface* surface = SDL_LoadBMP(filepath);
+	if (surface == nullptr)
+	{
+		cout << "erreur chargement";
+	}
+	Uint32 colorKey = SDL_MapRGB(surface->format, 255, 255, 255);
+	SDL_SetColorKey(surface, SDL_TRUE, colorKey);
+
+
+	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
+	r1.SetTexture(tex);
 
 	GameManager gm;
 
@@ -461,8 +471,11 @@ int main(int argc, char** argv)
 
 	float deltaTime = 0;
 
+
 	while (true) // BOUCLE
 	{
+
+		
 		Vector2f pos = r1.GetPosition(1, 0.5);
 		Uint64 start = SDL_GetTicks64();
 		SDL_Event* event;
@@ -511,6 +524,8 @@ int main(int argc, char** argv)
 			proj->SetPosition(pos.x, pos.y);
 			gm.Projectile.push_back(proj);
 			proj->Move(speedc1 * deltaTime, 0.f);
+			cout << "proj tirer" << endl;
+			cout << gm.Projectile.size() << endl;
 		}
 		if (InputManager::Get()->IsHeld(SDLK_d))
 		{
@@ -523,17 +538,13 @@ int main(int argc, char** argv)
 
 
 
-		/*
-		if (InputManager::Get()->IsHeld(SDL_MOUSEBUTTONDOWN))
-		{
-			//move right
-			r1.Move(speedc1 * deltaTime, 0.f);
-		}
-		*/
+		
+		
+		
 
 
 
-		/*
+		
 
 		if (c2.GetPosition(0.f, 1.f).y < 0)
 		{
@@ -574,7 +585,15 @@ int main(int argc, char** argv)
 			}
 			
 		}
+
 		//DRAW
+
+
+
+		
+
+
+
 		ChooseColor("Black");
 		SDL_RenderClear(renderer);
 		c2.Draw(renderer);
@@ -588,17 +607,22 @@ int main(int argc, char** argv)
 			proj->Move(speedc1 * deltaTime, 0.f); 
 		}
 
-		if (PosProj.x >= WIDTH)
-		{
-			//~&p;
-			//delete(&p);
-			cout << "projectile detruit" << endl;
-			PosProj.x = 0;
-		}
+
+	
 
 
+
+
+		
+		
+		SDL_UpdateWindowSurface(window);
 		SDL_RenderPresent(renderer);
 		Uint64 end = SDL_GetTicks64();
+
+
+
+
+
 
 		deltaTime = (end - start) / 1000.f;
 		float diff = TARGET_DELTA_TIME - deltaTime;
@@ -610,16 +634,16 @@ int main(int argc, char** argv)
 			deltaTime = TARGET_DELTA_TIME;
 		}
 
-		cout << gm.Projectile.size() << endl;
+		//cout << gm.Projectile.size() << endl;
 		//Display FPS
 		//std::cout << 1.f / deltaTime << std::endl;
 
-
-		*/
+		
 		
 	}
+	
 
-
+	SDL_RenderPresent(renderer);
 	SDL_Delay(1000);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

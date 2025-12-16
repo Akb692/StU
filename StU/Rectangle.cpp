@@ -10,5 +10,6 @@ void Rectangle::Draw(SDL_Renderer* renderer)
 {
 	SDL_Rect rect = { m_x, m_y, m_width, m_height };
 
-	SDL_RenderDrawRect(renderer, &rect);
+	SDL_RenderCopy(renderer, texture, NULL, &rect);
+	//SDL_RenderDrawRect(renderer, &rect);
 }
